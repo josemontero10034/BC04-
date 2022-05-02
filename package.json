@@ -1,0 +1,28 @@
+{
+  "name": "c",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "dev": "concurrently \"tsc -w\" \"nodemon dist/index.js\"",
+    "dev2": "concurrently \"tsc -w\" \"node dist/Chucknorris.js\"",
+    "dev3": "concurrently \"tsc -w\" \"node dist/ip.js\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.26.1",
+    "bigdecimal": "^0.6.1",
+    "concurrently": "^7.0.0",
+    "cross-fetch": "^3.1.5",
+    "express": "^4.17.3",
+    "node": "^17.7.1",
+    "node-fetch": "^3.2.3",
+    "typescript": "^4.6.3"
+  },
+  "devDependencies": {
+    "@types/axios": "^0.14.0",
+    "nodemon": "^2.0.15"
+  },
+  "description": ""
+}
