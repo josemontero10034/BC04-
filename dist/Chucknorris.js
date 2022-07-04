@@ -13,19 +13,51 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const axios_1 = __importDefault(require("axios"));
+const express = require('express');
+const { json } = require('express/lib/response');
+const chuckapi = express();
+chuckapi.use(express.json());
+const port = 8080;
+let database = {
+    "student": [
+        {
+            "firstname": "octavio",
+            "lastname": "kidd",
+            "age": 25
+        },
+        {
+            "firstname": "Adhonys",
+            "lastname": "Diaz",
+            "age": 30
+        },
+        {
+            "firstname": "Ean",
+            "lastname": "Jimenez12345",
+            "age": 24
+        }
+    ]
+};
 function main() {
     return __awaiter(this, void 0, void 0, function* () {
         const categorylist = (yield axios_1.default.get("https://api.chucknorris.io/jokes/categories")).data;
-        for (let i = 1; i < 6; i++) {
-            const random = Math.floor(Math.random() * categorylist.length);
-            const jokes = (yield axios_1.default.get("https://api.chucknorris.io/jokes/random?category=" + categorylist[random])).data;
-            console.log("Random joke number" + i + "from category" + categorylist[random] + ":" +
-                jokes.value.replaceAll("chuck", "Eduardo").replaceAll("Norris", "Burgos"));
-            categorylist.splice(random, 1);
-        }
+        const random = Math.floor(Math.random() * categorylist.length);
+        const jokes = (yield axios_1.default.get("https://api.chucknorris.io/jokes/random?category=" + categorylist[random])).data;
+        console.log("Random joke number  from category " + categorylist[random] + ":" + jokes.value.replaceAll("Chuck", "Eduardo").replaceAll("Norris", "Burgos"));
+        categorylist.splice(random, 1);
+        return jokes;
+        /*return {
+          "categories": jokes.categories,
+          "id":jokes.id,
+          "value":jokes.value
+        }*/ 
     });
 }
-main().catch((error) => {
-    console.log(error);
-});
+chuckapi.get('/joke', (request, respond) => __awaiter(void 0, void 0, void 0, function* () {
+    const valuejoke = yield main();
+    //respond.json(jokemain().then(val=>val));
+    //const result = jokemain().then(val=>console.log(val))
+    //const resultjson = main().then((res)=>console.log(res))
+    respond.send(valuejoke);
+}));
+chuckapi.listen(port, () => console.log('alterna Api is running!'));
 //# sourceMappingURL=Chucknorris.js.map
