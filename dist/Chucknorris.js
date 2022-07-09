@@ -25,12 +25,23 @@ function main() {
         const jokes = (yield axios_1.default.get("https://api.chucknorris.io/jokes/random?category=" + categorylist[random])).data;
         console.log("Random joke number  from category " + categorylist[random] + ":" + jokes.value.replaceAll("Chuck", "Eduardo").replaceAll("Norris", "Burgos"));
         categorylist.splice(random, 1);
-        return jokes;
+        return {
+            "categories": jokes.categories,
+            "id": jokes.id,
+            "value": jokes.value
+        };
     });
 }
 chuckapi.get('/joke', (request, respond) => __awaiter(void 0, void 0, void 0, function* () {
     const valuejoke = yield main();
     respond.send(valuejoke);
+}));
+chuckapi.post('/changejokes', (request, respond) => __awaiter(void 0, void 0, void 0, function* () {
+    const joke = request.body.value;
+    if (!!joke) {
+        function changejoke() {
+        }
+    }
 }));
 chuckapi.listen(port, () => console.log('alterna Api is running!'));
 //# sourceMappingURL=Chucknorris.js.map
