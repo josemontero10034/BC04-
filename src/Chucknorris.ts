@@ -1,5 +1,6 @@
 import { rejects } from "assert";
 import axios from "axios";
+import { request } from "http";
 import { type } from "os";
 import { resolve } from "path";
 const express = require('express');
@@ -12,25 +13,6 @@ type print= {
   "id":any,
   "value": string
 };
-let database:any ={
-  "student": [
-      {
-          "firstname":"octavio",
-          "lastname" :"kidd",
-          "age"      : 25
-      },
-      {
-          "firstname":"Adhonys",
-          "lastname" :"Diaz",
-          "age"      : 30
-      },
-      {
-          "firstname":"Ean",
-          "lastname" :"Jimenez12345",
-          "age"      : 24
-      }
-  ]
-};
 
 async function main()/*: Promise<print>*/ {
   const categorylist = (await axios.get("https://api.chucknorris.io/jokes/categories")).data;
@@ -39,18 +21,18 @@ const jokes=(await axios.get("https://api.chucknorris.io/jokes/random?category="
 console.log("Random joke number  from category "+ categorylist[random]+":"+ jokes.value.replaceAll("Chuck", "Eduardo").replaceAll("Norris", "Burgos"));
 categorylist.splice(random, 1);
 return jokes
-/*return {
-  "categories": jokes.categories,
-  "id":jokes.id,
-  "value":jokes.value
-}*/}
+}
 chuckapi.get('/joke', async(request:any, respond:any)=>{
   const valuejoke=await main();
-
-  //respond.json(jokemain().then(val=>val));
-  //const result = jokemain().then(val=>console.log(val))
-  //const resultjson = main().then((res)=>console.log(res))
  respond.send(valuejoke);
+});
+chuckapi.post('/changejokes', async(request:any, respond:any)=>{
+  const joke= request.body.value;
+  if(!!joke){
+    function changejoke(){
+      
+    }
+  }
 })
 chuckapi.listen(port, ()=> console.log('alterna Api is running!'))
 
