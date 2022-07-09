@@ -18,7 +18,7 @@ for (let i = 0; i < (value - 1); i++) {
 }
 ;
 console.log(factorial);
-const factorialtoarray = [..."" + factorial];
+const factorialtoarray = [..."" + factorial]; // we need the exactly numbers beside this code 's line
 let newfactorial = "";
 for (let i = 0; i < factorialtoarray.length; i++) {
     newfactorial += factorialtoarray[i];

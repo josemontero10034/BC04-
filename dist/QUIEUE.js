@@ -17,7 +17,8 @@ class Queue {
     isEmpty() {
         return (this.data.length === 0);
     }
-    see() {
+    peek() {
+        return this.data.shift;
     }
 }
 class TicketDispenser {
@@ -68,7 +69,9 @@ class TicketDispenser {
             processingTicketAverageDuration: totalDuration / this.processedTicketLog.length
         };
     }
+    ;
 }
+;
 const dispenser = new TicketDispenser();
 const ticket1 = dispenser.getTicket();
 console.log("first ticket: ", ticket1);

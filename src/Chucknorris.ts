@@ -1,15 +1,38 @@
+import { rejects } from "assert";
 import axios from "axios";
+import { request } from "http";
+import { type } from "os";
+import { resolve } from "path";
+const express = require('express');
+const { json } = require('express/lib/response');
+const chuckapi = express();
+chuckapi.use(express.json());
+const port = 8080;
+type print= {
+  "categories":string,
+  "id":any,
+  "value": string
+};
 
-async function main(){
-    const categorylist = (await axios.get("https://api.chucknorris.io/jokes/categories")).data;
-    for(let i=1; i<6; i++){
-    const random = Math.floor(Math.random() * categorylist.length);
-    const jokes=(await axios.get("https://api.chucknorris.io/jokes/random?category="+ categorylist[random])).data;
-    console.log("Random joke number"+i+"from category"+ categorylist[random]+":"+
-    jokes.value.replaceAll("chuck", "Eduardo").replaceAll("Norris", "Burgos"));
-    categorylist.splice(random, 1);
-    }
+async function main()/*: Promise<print>*/ {
+  const categorylist = (await axios.get("https://api.chucknorris.io/jokes/categories")).data;
+const random = Math.floor(Math.random() * categorylist.length);
+const jokes=(await axios.get("https://api.chucknorris.io/jokes/random?category="+ categorylist[random])).data;
+console.log("Random joke number  from category "+ categorylist[random]+":"+ jokes.value.replaceAll("Chuck", "Eduardo").replaceAll("Norris", "Burgos"));
+categorylist.splice(random, 1);
+return jokes
 }
-main().catch((error)=>{
-    console.log(error);
+chuckapi.get('/joke', async(request:any, respond:any)=>{
+  const valuejoke=await main();
+ respond.send(valuejoke);
+});
+chuckapi.post('/changejokes', async(request:any, respond:any)=>{
+  const joke= request.body.value;
+  if(!!joke){
+    function changejoke(){
+      
+    }
+  }
 })
+chuckapi.listen(port, ()=> console.log('alterna Api is running!'))
+
